@@ -17,14 +17,17 @@
  */
 package org.apache.oozie.test;
 
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.servlet.FilterHolder;
-import org.mortbay.jetty.servlet.ServletHolder;
-import org.mortbay.jetty.servlet.Context;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.servlet.ServletContextHandler;
 
+import java.util.EnumSet;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.Map;
+
+import javax.servlet.DispatcherType;
 
 /**
  * An embedded servlet container for testing purposes. <p/> It provides reduced functionality, it supports only
@@ -35,7 +38,7 @@ public class EmbeddedServletContainer {
     private String host = null;
     private int port = -1;
     private String contextPath;
-    Context context;
+    ServletContextHandler context;
 
     /**
      * Create a servlet container.
@@ -46,7 +49,7 @@ public class EmbeddedServletContainer {
     public EmbeddedServletContainer(String contextPath) {
         this.contextPath = contextPath;
         server = new Server(0);
-        context = new Context();
+        context = new ServletContextHandler();
         context.setContextPath("/" + contextPath);
         server.setHandler(context);
     }
@@ -86,7 +89,7 @@ public class EmbeddedServletContainer {
      * @param filterClass servlet class
      */
     public void addFilter(String filterPath, Class filterClass) {
-        context.addFilter(new FilterHolder(filterClass), filterPath, 0);
+        context.addFilter(new FilterHolder(filterClass), filterPath, EnumSet.of(DispatcherType.REQUEST));
     }
 
     /**
