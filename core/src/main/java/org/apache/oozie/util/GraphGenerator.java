@@ -36,7 +36,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import org.apache.commons.collections15.Transformer;
+import org.apache.commons.collections4.Transformer;
 import org.apache.oozie.client.WorkflowAction;
 import org.apache.oozie.client.WorkflowAction.Status;
 import org.apache.oozie.client.WorkflowJob;
